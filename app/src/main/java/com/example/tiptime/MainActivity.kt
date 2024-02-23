@@ -49,6 +49,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -80,15 +81,15 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TipTimeLayout() {
 
-    var tipInput by remember{
+    var tipInput by rememberSaveable {
         mutableStateOf("")
     }
 
-    var amountInput by remember {
+    var amountInput by rememberSaveable {
         mutableStateOf("")
     }
 
-    var roundUp by remember {
+    var roundUp by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -213,8 +214,8 @@ fun EditNumberField(
  * according to the local currency.
  * Example would be "$10.00".
  */
-@VisibleForTesting
-internal fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boolean): String {
+
+private fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boolean): String {
     var tip = tipPercent / 100 * amount
 
     if(roundUp){
